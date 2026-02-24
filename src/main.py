@@ -79,7 +79,7 @@ if __name__ == "__main__":
             all_results.append(result)
             processed_images.add(image_path.name)
 
-            print(f"  ✓ Success!")
+            print(f"    Success!")
             print(f"    Merchant: {result['merchant']}")
             print(f"    Date:     {result['date']}")
             print(f"    Total:    {result['total_amount']}")

@@ -1,2 +1,18 @@
+# Environments
 venv/
+env/
+.env
+
+# Python artifacts
 __pycache__/
+*.py[cod]
+*.so
+
+# Mac artifacts
+.DS_Store
+
+# Data, Databases, and ML Models
+data/
+*.sqlite
+*.db
+*.bin
