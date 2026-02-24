@@ -81,7 +81,7 @@ def train_and_evaluate(df):
     mape = mean_absolute_percentage_error(y_true, y_pred) * 100 # MAE as a %
     
     # Calculate RMSPE (RMSE as a %) safely to avoid dividing by zero
-    # We add a tiny number (1e-10) to the denominator just in case a true value is exactly 0
+    #  add a tiny number (1e-10) to the denominator just in case a true value is exactly 0
     rmspe = np.sqrt(np.mean(np.square((y_true - y_pred) / (y_true + 1e-10)))) * 100
     
     # 3. Normalized back to daily equivalent for fair comparison
@@ -89,7 +89,7 @@ def train_and_evaluate(df):
     daily_equiv_rmse = rmse / 30.4
     
     print("\n" + "="*50)
-    print("📈 RESUME METRICS (Monthly Performance)")
+    print(" METRICS (Monthly Performance)")
     print(f"Mean Absolute Error (MAE): ${mae:.2f}/mo (Equivalent to ${daily_equiv_mae:.2f}/day)")
     print(f"Root Mean Sq Error (RMSE): ${rmse:.2f}/mo (Equivalent to ${daily_equiv_rmse:.2f}/day)")
     print("-" * 50)
