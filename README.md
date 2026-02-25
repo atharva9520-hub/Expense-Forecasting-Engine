@@ -2,7 +2,7 @@
 
 An end-to-end Machine Learning and Data Engineering pipeline that ingests raw receipt images, extracts key financial data using OCR and NLP, categorizes expenses, and forecasts future spending using time-series analysis.
 
-## 🚀 Project Overview
+## Project Overview
 
 This project solves the messy reality of physical document processing. Using the SROIE dataset, the system reads hundreds of scanned receipts, intelligently extracts the Merchant, Date, and Total Amount, and builds a robust data warehouse. Finally, it applies predictive analytics to model financial habits while actively filtering out AI hallucinations and outliers.
 
