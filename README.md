@@ -1,46 +1,51 @@
-#  Intelligent Receipt Processing & Expense Prediction System
+# Intelligent Receipt Processing & Expense Prediction System
 
-An end-to-end Machine Learning and Data Engineering pipeline that ingests raw receipt images, extracts key financial data using OCR and NLP, categorizes expenses, and forecasts future spending using time-series analysis.
+Ever tried to keep track of a shoebox full of crumpled receipts? This project automates exactly that. 
 
-## Project Overview
+This is an end-to-end Machine Learning and Data Engineering pipeline. It takes messy, real-world receipt images, reads them using AI, figures out what you bought and where, and then uses time-series forecasting to predict your future spending habits. 
 
-This project solves the messy reality of physical document processing. Using the SROIE dataset, the system reads hundreds of scanned receipts, intelligently extracts the Merchant, Date, and Total Amount, and builds a robust data warehouse. Finally, it applies predictive analytics to model financial habits while actively filtering out AI hallucinations and outliers.
+### Key Features
 
-##  Key Features
+* **Reads Messy Receipts:** Uses advanced OCR (Optical Character Recognition) to read text off images, no matter how the receipt is rotated or formatted.
+* **Smart Extraction:** It doesn't just read words; it understands them. It uses NLP to find the *actual* "Total" and "Merchant" names, ignoring useless tax lines or phone numbers.
+* **Auto-Categorization:** Automatically buckets your expenses (like *Groceries*, *Transport*, or *Dining*) without needing manual tagging.
+* **Crash-Proof Processing:** Processing hundreds of images takes time. The system saves its progress as it goes, so a computer crash won't force you to start over.
+* **Future Forecasting:** Uses Facebook's Prophet AI to map out your monthly spending trends and predict future expenses.
 
-* **Multimodal AI OCR Pipeline:** Ingests receipt images and reads text regardless of language, rotation, or formatting without relying on rigid coordinate bounding boxes.
-* **Intelligent Information Extraction:** Uses NLP to locate the true "Total" and "Merchant" names among competing numbers and tax lines.
-* **Zero-Shot Classification:** Automatically categorizes extracted receipts into distinct expense buckets (e.g., Groceries, Transport, Dining).
-* **Automated Checkpointing:** Processes large image batches safely, ensuring progress isn't lost if the script is interrupted.
-* **Predictive Forecasting:** Uses **Facebook Prophet** to map monthly spending trends and forecast future expenses with calculated confidence intervals.
+---
 
-## Data Architecture (Medallion Approach)
+### How the Data is Organized
 
-To ensure high data quality, this project implements a Medallion Data Architecture:
 
-* **🥉 Bronze Layer (Raw):** 600+ raw, unstructured `.jpg` SROIE receipt images. *(Note: Excluded from this repo to save space).*
-* **🥈 Silver Layer (Processed):** `data/extracted_receipts.json` — The raw OCR text mapped to JSON, containing the initial AI extractions.
-* **🥇 Gold Layer (Cleaned Analytics):** `data/expenses.db` — A relational SQLite data warehouse. Here, rigorous Data Engineering logic is applied to filter out OCR hallucinations (such as scanning artifacts resulting in $55,000,000 totals) and restrict date boundaries to the verified 2016–2019 window.
 
-## Technology Stack
+To make sure the AI's predictions are actually accurate, this project uses a "Medallion" data architecture to slowly clean the data step-by-step:
 
+* **🥉 Bronze Layer (Raw):** 600+ raw, unorganized `.jpg` receipt images from the SROIE dataset *(Note: Excluded from this repo to keep it lightweight!)*.
+* **🥈 Silver Layer (Processed):** The `extracted_receipts.json` file. This is the raw text the AI pulled from the images. It's good, but occasionally the AI hallucinates (like reading a barcode as a $55,000,000 charge).
+* **🥇 Gold Layer (Cleaned & Ready):** The `expenses.db` database. This is where the magic happens. We use strict SQL rules to filter out those million-dollar AI hallucinations and lock the dates to realistic timeframes. 
+
+---
+
+###  Built With
 * **Language:** Python
-* **Computer Vision / OCR:** EasyOCR / Multimodal AI
-* **Natural Language Processing:** Zero-Shot Classification
-* **Database / Data Engineering:** SQLite, SQL, Pandas
-* **Machine Learning:** Facebook Prophet
-* **Data Visualization:** Matplotlib
+* **AI & Machine Learning:** EasyOCR, HuggingFace (Zero-Shot NLP), Facebook Prophet
+* **Data Engineering:** Pandas, SQLite, SQL
+* **Visualization:** Matplotlib
 
-## Results & Insights
+---
 
-By applying strict SQL constraints on the Silver Layer data, the time-series model successfully ignores critical OCR errors. The final Prophet forecast model clearly maps out spending density between 2017 and 2018, providing tight confidence intervals without being skewed by billion-dollar outliers or multi-decade date anomalies.
+###  The Results
 
-## How to Run (Gold Layer Analytics)
+By rigorously cleaning the data in the Gold Layer, the forecasting model is protected from crazy AI typos. The final output generates beautiful, interactive graphs that accurately map out spending density from 2017 to 2018 with tight, realistic confidence intervals.
 
-Because the heavy OCR process is already complete, you can query the database or run the forecasting model immediately using the provided files:
+---
 
-1. Clone the repository.
-2. Ensure you have the required libraries installed (`pandas`, `sqlite3`, `prophet`, `matplotlib`).
-3. Run the forecasting engine:
+### How to Run It
+
+Because the heavy AI image processing is already done and saved in the database, you can jump straight to the analytics!
+
+1. Clone this repository to your computer.
+2. Make sure you have the required libraries installed (`pip install pandas sqlite3 prophet matplotlib`).
+3. Run the forecasting engine in your terminal:
    ```bash
    python src/forecaster.py
