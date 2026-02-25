@@ -36,7 +36,7 @@ To make sure the AI's predictions are actually accurate, this project uses a "Me
 
 ###  The Results
 
-By rigorously cleaning the data in the Gold Layer, the forecasting model is protected from crazy AI typos. The final output generates beautiful, interactive graphs that accurately map out spending density from 2017 to 2018 with tight, realistic confidence intervals.
+By rigorously cleaning the data in the Gold Layer, the forecasting model is protected from crazy AI typos. The final output generates graphs that accurately map out spending density from 2017 to 2018 with tight, realistic confidence intervals.
 
 ---
 
